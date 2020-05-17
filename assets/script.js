@@ -13,7 +13,7 @@ $(document).ready(function () {
       type: 'POST',
       url: './search.php',
       data: { name: value },
-      //callback if there's no error
+      //success callback if there's no error
       success: function (obj) {
         let funderData = JSON.parse(obj);
         //if there's no results for a search, tell the user
@@ -29,6 +29,7 @@ $(document).ready(function () {
           resultsTitle.append('<h4>Search Results for "' + value + '" </h4>');
           $.each(funderData, function (index, val) {
             if (val[0] === null) {
+              //if there's no url, use #
               val[0] = '#';
             }
             const formatter = new Intl.NumberFormat('en-US', {
@@ -66,6 +67,7 @@ $(document).ready(function () {
       },
     });
   }).fail(function (response) {
+    //show error if autocomplete fails
     let err = response.responseText;
     resultsTitle.append(err);
   });
