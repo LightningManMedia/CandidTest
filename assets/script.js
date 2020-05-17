@@ -8,15 +8,14 @@ $(document).ready(function () {
     results.empty();
     //don't reload the page
     e.preventDefault();
-    //ajax request to collect our search results
+    //ajax request to collect our search results securely
     $.ajax({
-      type: 'GET',
+      type: 'POST',
       url: './search.php',
       data: { name: value },
       //callback if there's no error
       success: function (obj) {
         let funderData = JSON.parse(obj);
-        console.log(funderData);
         //if there's no results for a search, tell the user
         if (funderData.length === 0) {
           resultsTitle.append(
@@ -29,9 +28,6 @@ $(document).ready(function () {
         else {
           resultsTitle.append('<h4>Search Results for "' + value + '" </h4>');
           $.each(funderData, function (index, value) {
-            console.log(
-              'url= ' + value[0] + ' name= ' + value[1] + ' amount= ' + value[2]
-            );
             if (value[0] === null) {
               value[0] = '#';
             }
@@ -59,10 +55,9 @@ $(document).ready(function () {
       },
     });
   });
-  //post request to collect data for our autocomplete array
+  //request to collect data for our autocomplete array
   $.post('./search.php', { autocomplete: 'autocomplete' }, function (data) {
     let namesArr = JSON.parse(data);
-    console.log(namesArr);
     $('#search').autocomplete({
       minLength: 3,
       source: function (request, response) {

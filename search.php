@@ -5,10 +5,10 @@ $data = file_get_contents($url);
 
 $decoded = json_decode($data, true); 
 
-if (isset($_GET["name"])) { 
+if (isset($_POST["name"])) { 
     $funderData = array();
         foreach ($decoded['data']['results']['rows'] as $info) {
-            if (preg_match('/' . $_GET["name"] . '/i', $info['name'])) {
+            if (preg_match('/' . $_POST["name"] . '/i', $info['name'])) {
                 $data = array( $info['url'], $info['name'], $info['amount']);
                 array_push($funderData, $data);
             }
