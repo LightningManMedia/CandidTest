@@ -13,6 +13,7 @@ $(document).ready(function () {
       type: 'GET',
       url: './search.php',
       data: { name: value },
+      //callback if there's no error
       success: function (obj) {
         let funderData = JSON.parse(obj);
         console.log(funderData);
@@ -50,6 +51,11 @@ $(document).ready(function () {
             );
           });
         }
+      },
+      //show error if search doesn't work
+      error: function (xhr, status, error) {
+        let err = xhr.responseText;
+        resultsTitle.append(err);
       },
     });
   });
