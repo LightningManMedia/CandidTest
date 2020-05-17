@@ -65,5 +65,8 @@ $(document).ready(function () {
         response(results.slice(0, 5));
       },
     });
+  }).fail(function (response) {
+    let err = response.responseText;
+    resultsTitle.append(err);
   });
 });
