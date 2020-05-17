@@ -27,9 +27,9 @@ $(document).ready(function () {
         //otherwise show the search results from our ajax call
         else {
           resultsTitle.append('<h4>Search Results for "' + value + '" </h4>');
-          $.each(funderData, function (index, value) {
-            if (value[0] === null) {
-              value[0] = '#';
+          $.each(funderData, function (index, val) {
+            if (val[0] === null) {
+              val[0] = '#';
             }
             const formatter = new Intl.NumberFormat('en-US', {
               style: 'currency',
@@ -38,11 +38,11 @@ $(document).ready(function () {
             //display formatted results on the frontend
             results.append(
               '<div class="row"><div class="col-6"><a href=' +
-                value[0] +
+                val[0] +
                 ' target="_blank">' +
-                value[1] +
+                val[1] +
                 '</a></div><div class="col-6 text-right">Annual Funding: ' +
-                formatter.format(value[2]) +
+                formatter.format(val[2]) +
                 '</div></div><br></br>'
             );
           });
