@@ -6,6 +6,7 @@ $data = file_get_contents($url);
 $decoded = json_decode($data, true); 
 
 if (isset($_GET["name"])) { 
+    $funderData = array();
  foreach ($decoded['data']['results']['rows'] as $info) {
      //php 7.4+ version
    // $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
@@ -14,16 +15,17 @@ if (isset($_GET["name"])) {
    //php <7.4 version
    setlocale(LC_MONETARY, 'en_US.UTF-8');
 $money = money_format('%.2n', $info['amount']);
-$funders = array();
 if (preg_match('/' . $_GET["name"] . '/i', $info['name'])) {
- echo '<div class="row"><div class="col-6"><a href=' . $info['url'] . ' target="_blank">' . $info['name'] . '</a></div><div class="col-6 text-right">Annual Funding: ' . $money . '</div></div><br>'; 
+ //echo '<div class="row"><div class="col-6"><a href=' . $info['url'] . ' target="_blank">' . $info['name'] . '</a></div><div class="col-6 text-right">Annual Funding: ' . $money . '</div></div><br>'; 
+
  //	echo json_encode($info); //
-//$data = array( $info['url'], $info['name'], $info['amount']);
+$data = array( $info['url'], $info['name'], $info['amount']);
  //echo $info['name'];
-//array_push($funders, $data);
+array_push($funderData, $data);
 
 }
 }
+echo json_encode($funderData);
 }
 if (isset($_POST["autocomplete"])) { 
     $names = array();
